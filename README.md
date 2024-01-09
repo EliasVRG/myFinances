@@ -1,4 +1,4 @@
-# My Finances
+# MyFinances
 
 Um projeto pessoal para controle de finanças, a ideia e usar um dashboard feito no grafana.
 Então basicamente todo a parte de Script será feita para gravar as contas e despesas num banco de dados e consumir osdados com o Grafana.
