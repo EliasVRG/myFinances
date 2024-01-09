@@ -12,4 +12,12 @@ Para aprender toda a construção de uma aplicação irei documentar o máximo p
 | MongoDB | Disponivel Web e libera alguns gb gratis  |
 | Python | Sintaxe simple e simples para fazer interface grafica  |
 
+## System Python
+
+### Use Case
+
+![Caso de uso](./assets/CasoDeUso.svg)
+
 ## Requirements
+
+*under construction...*
