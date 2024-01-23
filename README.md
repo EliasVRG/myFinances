@@ -17,6 +17,13 @@ Para aprender toda a construção de uma aplicação irei documentar o máximo p
 ### Use Case
 
 ![Caso de uso](./assets/CasoDeUso.svg)
+<br>
+<br>
+<br>
+
+### Class Diagram
+
+![Diagrama de Classe](./assets/classes.png)
 
 ## Requirements
 
