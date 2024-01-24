@@ -27,4 +27,4 @@ Para aprender toda a construção de uma aplicação irei documentar o máximo p
 
 ## Requirements
 
-*under construction...*
+*under construction.*
