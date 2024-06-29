@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    background: linear-gradient(to right, #434343 0%, black 100%);
+    font-family: Montserrat, sans-serif;
+}
+
+.login-container {
+    color: whitesmoke;
+    background: #1c1c1c;
+    max-width: 30rem;
+    height: 27rem;
+    margin: auto;
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 15rem;
+}
+
+.login-pai{
+    text-align: center;
+}
+
+.navbar {
+    /* centraliza */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #1c1c1c;
+    color: whitesmoke;
+    font-weight: 700;
+}
+.navbar a{
+    color: whitesmoke;
+    transition: 1s;
+}
+.navbar a:hover{
+    transition: 0.5s;
+    transform: scale(1.1);
+    color: rgb(36, 167, 228);
+}
+ 
+/* Estilos para telas menores que 600px */
+@media only screen and (max-width: 600px) {
+    body{
+        max-width: max-content;
+    }
+    .navbar {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto; /* Remova a altura fixa */
+    }
+
+    .navbar div {
+        margin-bottom: 10rem; /* Adicione um espaçamento entre os botões */
+    }
+}

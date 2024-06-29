@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Carrega acentuação -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Sign Up</title>
+    <link rel="icon" type="image/x-icon" href="../static/assets/dragao.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Carrega o CSS -->
+    <link href="../static/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <style>
+        .cadastro-title {
+            font-weight: 700;
+        }
+        .form-login{
+            display: flex;
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .form-login label{
+            font-size: large;
+        }
+        .form-login input{
+            text-align: center;
+            width: 15rem;
+            background: #252525 !important;
+            border: none; 
+            color: whitesmoke;
+        }
+        .form-login input::after{
+            text-align: center;
+            width: 15rem;
+            background: #434343 !important;
+            border: none; 
+            color: whitesmoke;
+        }
+    </style>
+
+    <div class="container">
+        <div class="login-container login-pai">
+            <div class="login-header mt-3">
+                <h2 class="cadastro-title mb-5">Sign Up</h2>
+            </div>
+            <form class="form-login" action="{{ url_for('cadastro') }}" method="POST">
+                <div class="form-group mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button style="width: 15rem;" type="submit" class="btn btn-outline-success btn-block">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

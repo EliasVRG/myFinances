@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg pt-3 pb-3">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav justify-content-center">
+            <li action="/transactions" class="nav-item mr-3" id="start">
+                <button class="btn btn-outline-secondary"><a href="{{ url_for('transactions') }}" style="text-decoration: none;">Start</a></button>
+            </li>
+            <li action="/extract" class="nav-item mr-3" id="transaction">
+                <button class="btn btn-outline-secondary"><a href="{{ url_for('extract') }}" style="text-decoration: none;">Transaction</a></button>
+            </li>
+            <li action="#" class="nav-item">
+                <button class="btn btn-outline-secondary"><a href="{{ url_for('reports') }}" style="text-decoration: none;">Reports</a></button>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Carrega acentuação -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <title>MyFinances</title>
+    <link rel="icon" type="image/x-icon" href="../static/assets/dragao.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Carrega o CSS -->
+    <link href="../static/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <style>
+        .title {
+            font-weight: 700;
+            color: whitesmoke;
+        }
+        .card{
+            background: #1c1c1c;
+            color: whitesmoke;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+        .saldo{
+            margin-left: 5rem;
+            color: #00ff95;
+        }
+        .saldo-positive{
+            color: #00ff95;
+        }
+        .saldo-negative{
+            color: #f24949;
+        }
+        .botoes-modal{
+            display: flex;
+            /* deixar no final da tela */
+            position: absolute;
+            bottom: 3;
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            flex-direction: row;
+        }
+        .modal-transaction{
+            color: whitesmoke;
+            border: none;
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            max-width: 40rem;
+        }
+        .input-modal{
+            background: #434343 !important;
+            border: none;
+        }
+
+    </style>
+
+    {% include 'navegacao.html' %}
+
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center title">My Finances</h2>
+
+        <section id="balance" class="">
+            <div class="card">
+                <div class="card-body">
+                    <h3 style="font-weight: 600;font-family: Montserrat;" class="mt-1 mb-0">Saldo Atual</h3>
+                    <p style="opacity: 50%;" class="mb-0">R$</p>
+                    <h3 class="mt-1 saldo">{{ current_balance }}</h3>
+
+                    <!-- Linha dividida -->
+                    <div class="row">
+                        <div class="col-6">
+                            <p style="opacity: 50%;" class="mb-0">Entradas</p>
+                            <h3 class="mt-1 saldo-positive">{{ today_entries }}</h3>
+                        </div>
+                        <div class="col-6">
+                            <p style="opacity: 50%;" class="mb-0">Saídas</p>
+                            <h3 class="mt-1 saldo-negative">{{ today_exits }}</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- divisoria com uma linha branca  -->
+                    <hr style="background: whitesmoke; opacity: 50%;" class="my-4">
+                    
+                    <!-- mostra as ultimas 5 transações -->
+                    <h4 style="font-weight: 500;font-family: Montserrat;opacity: 60%;" class="mt-1 mb-2 text-center">Transactions</h4>
+
+                    <div>
+                        <table class="table table-borderless table-hover" style="border: none; border-collapse: collapse;">
+                            <thead>
+                                <tr class="text-center" style="opacity: 70%; color: whitesmoke;">
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                {% for transaction in transactions %}
+                                <tr class="text-center" style="opacity: 70%; color: whitesmoke;">
+                                    <td>{{ transaction.date }}</td>
+                                    <td>{{ transaction.type }}</td>
+                                    <td>{{ transaction.description }}</td>
+                                    <td>{{ transaction.category }}</td>
+                                    <td>{{ transaction.value }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                    
+                    <style>
+                        .table-striped tbody tr:nth-of-type(odd),
+                        .table-striped tbody tr:nth-of-type(even) {
+                            border-top: none;
+                            border-bottom: none;
+                        }
+                    </style>
+                </div>
+            </div>
+
+            <!-- Modal para adicionar nova transação -->
+            <div class="modal fade mt-5" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content text-center">
+                        <div class="modal-header" style="background-color: #1c1c1c; color: whitesmoke;">
+                            <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" style="color: whitesmoke;">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body pt-4" style="background-color: #1c1c1c; color: whitesmoke;">
+                            <form class="form justify-content-center" action="/addTransaction" method="POST">
+                                <div class="form-group">
+                                    <label for="date">Date</label>
+                                    <input style="color: whitesmoke;" type="date" class="form-control input-modal" id="date" name="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select style="color: whitesmoke;" class="form-control input-modal" id="type" name="type">
+                                        <option value="entrada">Entrada</option>
+                                        <option value="saida">Saída</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input style="color: whitesmoke;" type="text" class="form-control input-modal" id="description" name="description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select style="color: whitesmoke;" class="form-control input-modal" id="category" name="category">
+                                        <option value="Salário">Salário</option>
+                                        <option value="Alimentação">Alimentação</option>
+                                        <option value="Despesas">Despesas</option>
+                                        <option value="Lazer">Lazer</option>
+                                        <option value="Transporte">Transporte</option>
+                                        <option value="Emergência">Emergência</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value">Value</label>
+                                    <input style="color: whitesmoke;" type="number" class="form-control input-modal" id="value" name="value">
+                                </div>
+                                <div class="modal-footer d-flex justify-content-between pt-4" style="background-color: #1c1c1c;">
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-outline-primary">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões para abrir os modais -->
+            <div class="botoes-modal mb-0">
+                <button type="button" class="btn btn-outline-primary btn-add mr-3" data-toggle="modal" data-target="#transactionModal">Add Transaction</button>
+                <button action="/logout" type="button" class="btn btn-outline-danger btn-add ml-1">Exit</button>
+            </div>
+        </section>
+    </div>
+
+    {% include 'footer.html' %}
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

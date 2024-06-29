@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MyFinances</title>
+    <link rel="icon" type="image/x-icon" href="../static/assets/dragao.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Carrega o CSS -->
+    <link href="../static/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <style>
+        .navbar {
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #1c1c1c;
+            color: whitesmoke;
+            font-weight: 700;
+        }
+        .navbar a{
+            color: whitesmoke;
+            transition: 1s;
+        }
+        .navbar a:hover{
+            transition: 0.5s;
+            transform: scale(1.1);
+            color: rgb(36, 167, 228);
+        }
+        .title {
+            font-weight: 700;
+            color: whitesmoke;
+        }
+        .card{
+            background: #1c1c1c;
+            color: whitesmoke;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+        .saldo{
+            margin-left: 5rem;
+            color: #00ff95;
+        }
+        .saldo-positive{
+            color: #00ff95;
+        }
+        .saldo-negative{
+            color: #f24949;
+        }
+        .botoes-modal{
+            display: flex;
+            /* deixar no final da tela */
+            position: absolute;
+            bottom: 3;
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            flex-direction: row;
+        }
+        .modal-transaction{
+            color: whitesmoke;
+            border: none;
+            /* centraliza */
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            max-width: 40rem;
+        }
+        .input-modal{
+            background: #434343 !important;
+            border: none;
+        }
+
+        /* Chrome, Edge and Safari */
+        *::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+        }
+        *::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: #DFE9EB;
+        }
+
+        *::-webkit-scrollbar-track:hover {
+        background-color: #B8C0C2;
+        }
+
+        *::-webkit-scrollbar-track:active {
+        background-color: #B8C0C2;
+        }
+
+        *::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: #434343;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+        background-color: #4d4c4c;
+        }
+
+        *::-webkit-scrollbar-thumb:active {
+        background-color: #1b1a1a;
+        }
+    </style>
+
+    {% include 'navegacao.html' %}
+
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center title">My Finances</h2>
+    
+        <div class="row">
+            <!-- Gráfico de Barras -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 style="font-weight: 500; opacity: 60%;" class="mt-1 mb-2 text-center">Finance Overview</h4>
+                        <canvas id="myChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Gráfico de Linhas: Comparação de Gastos por Mês -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 style="font-weight: 500; opacity: 60%;" class="mt-1 mb-2 text-center">Monthly Expenses Comparison</h4>
+                        <canvas id="monthlyChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Novo Gráfico: Distribuição de Saídas -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 style="font-weight: 500; opacity: 60%;" class="mt-1 mb-2 text-center">Expense Distribution</h4>
+                        <canvas id="expensesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico de Radar -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 style="font-weight: 500; opacity: 60%;" class="mt-1 mb-2 text-center">Category Comparison</h4>
+                        <canvas id="radarChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br><br><br><br><br><br>
+
+    {% include 'footer.html' %}
+
+    <!-- Script para carregar dados e renderizar gráficos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var chartData = JSON.parse('{{ chart_data | tojson | safe }}');
+        
+            console.log("Chart Data: ", chartData);
+            console.log("Monthly Expenses Labels: ", chartData.monthlyExpenses.labels);
+            console.log("Monthly Expenses Data: ", chartData.monthlyExpenses.data);
+        
+            // Dados para o gráfico de barras de visão financeira
+            var barData = {
+                labels: chartData.financialOverview.labels,
+                datasets: [{
+                    label: 'Gastos Mensais (R$)',
+                    backgroundColor: '#dc3545',
+                    borderColor: '#dc3545',
+                    borderWidth: 1,
+                    data: chartData.financialOverview.data
+                }]
+            };
+        
+            // Opções do gráfico de barras
+            var barOptions = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+        
+            // Renderiza o gráfico de barras
+            var ctxBar = document.getElementById('myChart').getContext('2d');
+            var barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: barData,
+                options: barOptions
+            });
+        
+            // Dados do gráfico de linha de gastos mensais
+            var monthlyData = {
+                labels: chartData.monthlyExpenses.labels,
+                datasets: [{
+                    label: 'Gastos por Mês (R$)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: chartData.monthlyExpenses.data
+                }]
+            };
+        
+            // Renderiza o gráfico de linha
+            var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+            var monthlyChart = new Chart(ctxMonthly, {
+                type: 'line',
+                data: monthlyData,
+                options: barOptions
+            });
+        
+            // Dados do gráfico de distribuição de saídas
+            var expensesData = {
+                labels: chartData.expenseDistribution.labels,
+                datasets: [{
+                    label: 'Distribuição de Saídas',
+                    backgroundColor: ['#f24949', '#f24949', '#f24949', '#f24949'],
+                    borderColor: '#1c1c1c',
+                    borderWidth: 1,
+                    data: chartData.expenseDistribution.data
+                }]
+            };
+        
+            // Renderiza o gráfico de pizza
+            var ctxExpenses = document.getElementById('expensesChart').getContext('2d');
+            var expensesChart = new Chart(ctxExpenses, {
+                type: 'pie',
+                data: expensesData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': R$ ' + tooltipItem.raw.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        
+            // Dados do gráfico de radar de comparação de categorias
+            var radarData = {
+                labels: chartData.categoryComparison.labels,
+                datasets: [{
+                    label: 'Categorias de Gastos',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
+                    data: chartData.categoryComparison.data
+                }]
+            };
+        
+            // Renderiza o gráfico de radar
+            var ctxRadar = document.getElementById('radarChart').getContext('2d');
+            var radarChart = new Chart(ctxRadar, {
+                type: 'radar',
+                data: radarData,
+                options: {
+                    scale: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    
+    
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
