@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "user": "Elias",
+        "date": "2024-07-02",
+        "type": "saida",
+        "description": "Salgado e ouro branco",
+        "category": "Lazer",
+        "value": -9.5
+    },
+    {
+        "user": "Elias",
+        "date": "2024-07-02",
+        "type": "saida",
+        "description": "Doce depois do almo\u00e7o",
+        "category": "Lazer",
+        "value": -5.5
+    },
+    {
+        "user": "Elias",
+        "date": "2024-07-02",
+        "type": "saida",
+        "description": "Bolacha e barra de chocolate",
+        "category": "Lazer",
+        "value": -9.5
+    }
+]

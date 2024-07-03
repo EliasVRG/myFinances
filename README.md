@@ -1,8 +1,50 @@
-# MyFinances Backend
+# MyFinances
 
 ## Visão Geral
 
 MyFinances é uma aplicação web projetada para ajudar os usuários a gerenciar suas transações financeiras. O backend é construído usando Flask, um framework web WSGI leve em Python. Esta aplicação permite que os usuários façam autenticação, gerenciem transações e gerem relatórios financeiros.
+
+# MyFinances Frontend
+
+## Login e Registro
+
+Para acessar a aplicação e nescessário autenticar-se ou registrar-se caso não tenha uma conta.
+
+A tela para se logar é:
+
+![login](./static/assets/login.png)
+
+A tela para se registrar é:
+
+![cadastro](./static/assets/cadastro.png)
+
+## Transações
+
+### Adicionar, Visualizar e Gerenciar
+
+A aplicação permite que os usuários adicione, visualize e gerencie suas transações.
+
+A tela para visualizar principal é:
+
+![adicionar](./static/assets/adicionar.png)
+
+### Extrato
+
+A aplicação permite que os usuários visualize o extrato de suas transações.
+
+A tela para visualizar extrato é:
+
+![extrato](./static/assets/extrato.png)
+
+### Relatórios
+
+A aplicação permite que os usuários gerem relatórios financeiros.
+
+A tela para gerar relatórios é:
+
+![relatorios](./static/assets/relatorios.png)
+
+# MyFinances Backend
 
 ## Funcionalidades
 
