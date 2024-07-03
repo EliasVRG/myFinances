@@ -12,11 +12,11 @@ Para acessar a aplicação e nescessário autenticar-se ou registrar-se caso nã
 
 A tela para se logar é:
 
-![login](./static/assets/login.png)
+<img src="./static/assets/login.png" alt="login">
 
 A tela para se registrar é:
 
-![cadastro](./static/assets/cadastro.png)
+<img src="./static/assets/cadastro.png" alt="cadastro">
 
 ## Transações
 
@@ -26,7 +26,7 @@ A aplicação permite que os usuários adicione, visualize e gerencie suas trans
 
 A tela para visualizar principal é:
 
-![adicionar](./static/assets/adicionar.png)
+<img src="./static/assets/adicionar.png" alt="adicionar-tela-principal">
 
 ### Extrato
 
@@ -34,7 +34,7 @@ A aplicação permite que os usuários visualize o extrato de suas transações.
 
 A tela para visualizar extrato é:
 
-![extrato](./static/assets/extrato.png)
+<img src="./static/assets/extrato.png" alt="extrato">
 
 ### Relatórios
 
@@ -42,7 +42,7 @@ A aplicação permite que os usuários gerem relatórios financeiros.
 
 A tela para gerar relatórios é:
 
-![relatorios](./static/assets/relatorios.png)
+<img src="./static/assets/relatorios.png" alt="relatorios">
 
 # MyFinances Backend
 
